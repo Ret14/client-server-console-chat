@@ -1,0 +1,18 @@
+version: '2.1'
+
+services:
+
+  maria:
+    container_name: maria
+    image: "mariadb:latest"
+
+    environment:
+      MYSQL_ROOT_PASSWORD: pass
+    ports:
+      - "4000:3306"
+    volumes:
+      - ./Database:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD", "mysqladmin", "-uroot", "-ppass", "ping", "-h", "maria"]
+      timeout: 1s
+      retries: 30
